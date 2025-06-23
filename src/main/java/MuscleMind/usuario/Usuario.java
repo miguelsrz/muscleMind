@@ -8,10 +8,9 @@ public class Usuario {
     private String nombreUsuario;
     private int edad;
     private int pesoKg;
-    private int password = 0; // opcional
+    private int password;
     private String objetivo;
     private ArrayList<Rutina> listaRutinas;
-    private ArrayList<Sesion> historialSesiones;
 
     public Usuario(String nombreUsuario, int password, int edad, int pesoKg, String objetivo, Rutina rutina) {
         this.nombreUsuario = nombreUsuario;
@@ -20,7 +19,6 @@ public class Usuario {
         this.pesoKg = pesoKg;
         this.objetivo = objetivo;
         this.listaRutinas = new ArrayList<>();
-        this.historialSesiones = new ArrayList<>();
         listaRutinas.add(rutina);
     }
 
@@ -58,25 +56,6 @@ public class Usuario {
 
     public ArrayList<Rutina> getListaRutinas() {
         return listaRutinas;
-    }
-
-    public void agregarSesion(Sesion sesion) {
-        historialSesiones.add(sesion);
-    }
-
-    public ArrayList<Sesion> getHistorialSesiones() {
-        return historialSesiones;
-    }
-
-    public void verHistorial() {
-        if (historialSesiones.isEmpty()) {
-            System.out.println("No hay sesiones registradas.");
-            return;
-        }
-        System.out.println("=== Historial de sesiones ===");
-        for (Sesion s : historialSesiones) {
-            s.mostrarResumen();
-        }
     }
 
     public void empezarRutina(String nombreRutina) {

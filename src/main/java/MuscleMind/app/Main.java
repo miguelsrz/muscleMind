@@ -246,7 +246,7 @@ public class Main {
         System.out.println("--- MENU INICIO ENTRENAMIENTO ---");
         ArrayList<Rutina> rutinas = usuarioActual.getListaRutinas();
 
-        System.out.println("");
+        System.out.println();
         if (rutinas.isEmpty()) {
             System.out.println("No tiene rutinas asignadas.");
             return;
@@ -255,6 +255,7 @@ public class Main {
         for (int i = 0; i < rutinas.size(); i++) {
             System.out.println((i + 1) + ". " + rutinas.get(i).getNombreRutina());
         }
+
         System.out.println("");
         System.out.print("Seleccione una rutina: ");
         int opcion = Integer.parseInt(scanner.nextLine()) - 1;
@@ -266,7 +267,7 @@ public class Main {
         }
 
         Rutina rutinaSeleccionada = rutinas.get(opcion);
-        ArrayList<Ejercicio> ejercicios = new ArrayList<>(rutinaSeleccionada.getListaEjercicios());
+        ArrayList<Ejercicio> ejercicios = rutinaSeleccionada.getListaEjercicios();
         ArrayList<String> resultados = new ArrayList<>();
         int caloriasTotales = 0;
 
@@ -279,15 +280,14 @@ public class Main {
 
             if (e instanceof EjerciciosFuerza fuerza) {
                 String resultado = "";
-
                 for (int i = 1; i <= fuerza.getCantidadSeries(); i++) {
                     System.out.print("Serie " + i + " - Peso (kg): ");
                     int peso = Integer.parseInt(scanner.nextLine());
                     System.out.print("Serie " + i + " - Reps: ");
                     int reps = Integer.parseInt(scanner.nextLine());
                     resultado += "[" + peso + "kg x " + reps + " reps] ";
+                    caloriasTotales += 20;
                 }
-
                 resultados.add(resultado.trim());
             } else if (e instanceof EjerciciosCardio cardio) {
                 System.out.print("Duración real (segundos): ");
@@ -296,78 +296,52 @@ public class Main {
                 int intensidad = Integer.parseInt(scanner.nextLine());
 
                 resultados.add(tiempo + "s a " + intensidad + " bpm");
-                caloriasTotales += cardio.getCaloriasQuemadas(); // puedes mejorar esto
+                caloriasTotales += cardio.getCaloriasQuemadas();
+            } else {
+                resultados.add("Ejercicio no evaluado.");
             }
         }
 
-        System.out.println("");
+        System.out.println();
         System.out.print("Duración total (minutos): ");
         int duracion = Integer.parseInt(scanner.nextLine());
 
-        Sesion sesion = new Sesion(rutinaSeleccionada.getNombreRutina(), LocalDateTime.now(), duracion, caloriasTotales, ejercicios);
-        for (String r : resultados) {
-            sesion.agregarResultado(r);
-        }
+        // ✅ Usamos el método de Rutina directamente para registrar
+        rutinaSeleccionada.registrarSesion(duracion, caloriasTotales, resultados);
 
-        usuarioActual.agregarSesion(sesion);
-
-        System.out.println("");
-        System.out.println("Sesión registrada exitosamente.");
-        System.out.println("");
-
+        System.out.println("\nSesión registrada exitosamente.\n");
     }
 
     public static void verProgreso() {
+        ArrayList<Rutina> rutinas = usuarioActual.getListaRutinas();
 
-        ArrayList<Sesion> sesiones = usuarioActual.getHistorialSesiones();
-        if (sesiones.isEmpty()) {
-            System.out.println("No hay sesiones registradas aún.");
+        System.out.println("--- MENU VER PROGRESO ---");
+
+        System.out.println("");
+        if (rutinas.isEmpty()) {
+            System.out.println("No tiene rutinas asignadas.");
             return;
         }
 
-        System.out.println("\n=== HISTORIAL DE PROGRESO ===\n");
-        
-        for (Sesion s : sesiones) {
-            
-            System.out.println("- Rutina: " + s.getNombreRutina());
-            System.out.println("- Fecha: " + s.getFecha());
-            System.out.println("- Duración: " + s.getDuracionReal() + " min");
-            System.out.println("- Calorías estimadas: " + s.getCaloriasTotales());
-            System.out.println("- Ejercicios:");
-
-            ArrayList<Ejercicio> ejercicios = s.getEjerciciosRealizados();
-            ArrayList<String> resultados = s.getResultadosEjercicios();
-
-            for (int i = 0; i < ejercicios.size(); i++) {
-                Ejercicio e = ejercicios.get(i);
-                String resultado = resultados.get(i);
-
-                if (e instanceof EjerciciosFuerza) {
-                    String[] series = resultado.split("]");
-                    int maxPeso = 0, repsMax = 0;
-
-                    for (String serie : series) {
-                        try {
-                            String[] partes = serie.replace("[", "").trim().split("x");
-                            int peso = Integer.parseInt(partes[0].replace("kg", "").trim());
-                            int reps = Integer.parseInt(partes[1].replace("reps", "").trim());
-                            if (peso > maxPeso || (peso == maxPeso && reps > repsMax)) {
-                                maxPeso = peso;
-                                repsMax = reps;
-                            }
-                        } catch (Exception ex) {
-                            // en caso de error, se omite esa serie
-                        }
-                    }
-
-                    System.out.println("   - " + e.getNombreEjercicio() + " | Peso máx: " + maxPeso + "kg x " + repsMax + " reps");
-                } else if (e instanceof EjerciciosCardio) {
-                    System.out.println("   - " + e.getNombreEjercicio() + " | " + resultado);
-                }
-            }
-            System.out.println("-------------------------------------------------------------------------");
-            System.out.println("");
+        for (int i = 0; i < rutinas.size(); i++) {
+            System.out.println((i + 1) + ". " + rutinas.get(i).getNombreRutina());
         }
+        
+        System.out.println("");
+        System.out.print("Seleccione una rutina: ");
+        int opcion = Integer.parseInt(scanner.nextLine()) - 1;
+        if (opcion < 0 || opcion >= rutinas.size()) {
+            System.out.println("");
+            System.out.println("Opción inválida.");
+            System.out.println("");
+            return;
+        }
+
+        Rutina rutinaSeleccionada = rutinas.get(opcion);
+
+        System.out.println("\n=== HISTORIAL DE PROGRESO ===\n");
+        rutinaSeleccionada.verProgreso();
+
     }
 
 }
