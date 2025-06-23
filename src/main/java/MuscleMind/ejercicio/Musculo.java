@@ -5,6 +5,6 @@ public enum Musculo {
     PECHO,
     ESPALDA,
     BRAZOS,
-    CUADRICEPS,
+    PIERNA,
     GENERAL
 }

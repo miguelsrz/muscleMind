@@ -3,16 +3,16 @@ package musclemind.usuario;
 
 import musclemind.ejercicio.Ejercicio;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Sesion {
     private String nombreRutina;
     private LocalDateTime fecha;
     private int duracionReal;
     private int caloriasTotales;
-    private List<Ejercicio> ejerciciosRealizados;
+    private ArrayList<Ejercicio> ejerciciosRealizados;
 
-    public Sesion(String nombreRutina, LocalDateTime fecha, int duracionReal, int caloriasTotales, List<Ejercicio> ejerciciosRealizados) {
+    public Sesion(String nombreRutina, LocalDateTime fecha, int duracionReal, int caloriasTotales, ArrayList<Ejercicio> ejerciciosRealizados) {
         this.nombreRutina = nombreRutina;
         this.fecha = fecha;
         this.duracionReal = duracionReal;
