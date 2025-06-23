@@ -1,4 +1,5 @@
-
+// La clase no ha sido implementada en la aplicacion de consola. Se espera utilziar cuando se vea interfaz
+// Permitira diferenciar el tipo de ejercicio, y sera una clase de guia para el usuario para que realice el estiramiento como se debe por el tiempo que corresponda
 package musclemind.ejercicio;
 
 import musclemind.media.Video;
@@ -10,9 +11,11 @@ public class EjerciciosEstiramiento extends Ejercicio {
         super(nombre, descripcion, duracion, video);
         this.musculoEstirado = musculo;
     }
-
+    
+    // Getters
     public Musculo getMusculoEstirado() { return musculoEstirado; }
-
+    
+    // Se espera utilizar cuando se implementen con interfaz
     @Override public void mostrarVideo() { video.verVideo(); }
     @Override public void realizar() {
         System.out.println("Realizando estiramiento de: " + musculoEstirado);

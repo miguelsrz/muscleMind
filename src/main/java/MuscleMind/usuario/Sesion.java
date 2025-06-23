@@ -1,3 +1,5 @@
+//  Logica fue pasada a Rutina
+
 //package musclemind.usuario;
 //
 //import musclemind.ejercicio.Ejercicio;

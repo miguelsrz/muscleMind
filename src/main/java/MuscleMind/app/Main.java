@@ -1,5 +1,8 @@
+// Aplicacion de consola que hace demostracion del flujo esperado de un usuario al implementar interfaz grafica
+// Se utilizan mayoria de clases y sus metodos, sin embargo, se espera ampliar en funcionalidades y la calidad de ellas cuando se implemente interfaz grafics
 package musclemind.app;
 
+// Imports necesarios
 import java.time.LocalDateTime;
 import musclemind.usuario.*;
 import musclemind.rutina.*;
@@ -14,6 +17,7 @@ public class Main {
     private static ArrayList<Usuario> usuarios = new ArrayList<>();
     private static Usuario usuarioActual = null;
 
+    // Metodo main, donde a partir de aqui se orienta hacia el flujo del usuario
     public static void main(String[] args) {
         while (true) {
             mostrarMenuPrincipal();
@@ -34,6 +38,7 @@ public class Main {
         }
     }
 
+    // Menu para registro, inicio sesion y salida de aplicacion
     private static void mostrarMenuPrincipal() {
         System.out.println("");
         System.out.println("=== MUSCLEMIND ===");
@@ -45,6 +50,7 @@ public class Main {
         System.out.print("Seleccione una opción: ");
     }
 
+    // Metodo para reducir codigo, usos internos
     private static int leerOpcion() {
         try {
             return Integer.parseInt(scanner.nextLine());
@@ -53,6 +59,7 @@ public class Main {
         }
     }
 
+    // Registro de un usuario simulado basico
     private static void registrarUsuario() {
         System.out.println("--- MENU REGISTRO ---");
         System.out.print("Nombre de usuario: ");
@@ -72,6 +79,7 @@ public class Main {
         System.out.println("Usuario registrado con éxito.");
     }
 
+    // Inicio de sesion de un usuario simulado basico
     private static void iniciarSesion() {
         System.out.println("--- MENU INICIO ---");
         System.out.print("Ingrese su nombre de usuario: ");
@@ -103,6 +111,7 @@ public class Main {
         System.out.println("Usuario no encontrado.\n");
     }
 
+    // Cuando se ingresa sesion, el usuario puede acceder a las distintas funcionalidas basicas de la aplicacion desarrolladas para la demostracion
     private static void menuUsuario() {
         int opcion;
         do {
@@ -136,6 +145,7 @@ public class Main {
         } while (opcion != 5);
     }
 
+    // Permite visualizar las rutinas y ejercicios del usuario
     private static void mostrarRutinas() {
         System.out.println("--- MENU VER RUTINAS ---");
         ArrayList<Rutina> rutinas = usuarioActual.getListaRutinas();
@@ -150,6 +160,7 @@ public class Main {
         }
     }
 
+    // Se crea una rutina con ejercicios de fuerza o cardio
     private static void crearRutina() {
         System.out.println("--- MENU CREAR RUTINA ---");
         System.out.print("Nombre de la nueva rutina: ");
@@ -183,6 +194,7 @@ public class Main {
         System.out.println("Rutina creada.");
     }
 
+    // Metodo para reduccion de codigo
     private static EjerciciosFuerza crearEjercicioFuerza() {
         System.out.print("Nombre del ejercicio: ");
         String nombre = scanner.nextLine();
@@ -226,6 +238,7 @@ public class Main {
         };
     }
 
+    // Metodo para reduccion de codigo
     private static EjerciciosCardio crearEjercicioCardio() {
         System.out.print("Nombre del ejercicio: ");
         String nombre = scanner.nextLine();
@@ -242,16 +255,19 @@ public class Main {
         return new EjerciciosCardio(nombre, descripcion, duracion, video, calorias, pulsaciones);
     }
 
+    // Se inicia el registro de datos de un entrenamiento. Los datos de ejercicio dados cuando se agrego a una rutina son de referencia para el usuario en un futuro, mas en la practica el usuario puede ingresar los datos que completo mientras realizaba la rutina
     private static void iniciarEntrenamiento() {
         System.out.println("--- MENU INICIO ENTRENAMIENTO ---");
         ArrayList<Rutina> rutinas = usuarioActual.getListaRutinas();
 
+        // En dado caso
         System.out.println();
         if (rutinas.isEmpty()) {
             System.out.println("No tiene rutinas asignadas.");
             return;
         }
 
+        // Se escoje la rutina a realizar
         for (int i = 0; i < rutinas.size(); i++) {
             System.out.println((i + 1) + ". " + rutinas.get(i).getNombreRutina());
         }
@@ -269,11 +285,14 @@ public class Main {
         Rutina rutinaSeleccionada = rutinas.get(opcion);
         ArrayList<Ejercicio> ejercicios = rutinaSeleccionada.getListaEjercicios();
         ArrayList<String> resultados = new ArrayList<>();
+
+        // Los calculos de calorias son temporales, se mejoraran cuando se implemente interfaz
         int caloriasTotales = 0;
 
         System.out.println("");
         System.out.println("Iniciando sesión de entrenamiento...");
 
+        // Por cada tipo de ejercicio se registran los datos de interes
         for (Ejercicio e : ejercicios) {
             System.out.println("");
             System.out.println("Ejercicio: " + e.getNombreEjercicio());
@@ -306,7 +325,7 @@ public class Main {
         System.out.print("Duración total (minutos): ");
         int duracion = Integer.parseInt(scanner.nextLine());
 
-        // ✅ Usamos el método de Rutina directamente para registrar
+        // Se registra la sesion directamente en la rutina asociada
         rutinaSeleccionada.registrarSesion(duracion, caloriasTotales, resultados);
 
         System.out.println("\nSesión registrada exitosamente.\n");
@@ -322,11 +341,12 @@ public class Main {
             System.out.println("No tiene rutinas asignadas.");
             return;
         }
-
+        
+        // Se selecciona rutina para ver su historico
         for (int i = 0; i < rutinas.size(); i++) {
             System.out.println((i + 1) + ". " + rutinas.get(i).getNombreRutina());
         }
-        
+
         System.out.println("");
         System.out.print("Seleccione una rutina: ");
         int opcion = Integer.parseInt(scanner.nextLine()) - 1;
@@ -338,7 +358,8 @@ public class Main {
         }
 
         Rutina rutinaSeleccionada = rutinas.get(opcion);
-
+        
+        // Utilizando el metodo de la rutina, se ve los datos historicos
         System.out.println("\n=== HISTORIAL DE PROGRESO ===\n");
         rutinaSeleccionada.verProgreso();
 

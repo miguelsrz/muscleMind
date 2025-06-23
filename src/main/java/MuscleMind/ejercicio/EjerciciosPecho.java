@@ -1,4 +1,4 @@
-
+// Las clases hijas de EjercicioFuerza actualmente se diferencian por el musculo que trabajan, cuando se implemente interfaz se diferenciaran con informacion para el usuario o relacionados
 package musclemind.ejercicio;
 
 import musclemind.media.Video;

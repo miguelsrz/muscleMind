@@ -1,4 +1,4 @@
-
+// Enum
 package musclemind.ejercicio;
 
 public enum Musculo {

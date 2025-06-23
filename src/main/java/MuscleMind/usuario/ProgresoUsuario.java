@@ -1,4 +1,4 @@
-
+// Se espera utilizar esta clase cuando se vea interfaz, pasando logica de Rutina aqui.
 package musclemind.usuario;
 
 import java.time.LocalDate;

@@ -1,3 +1,4 @@
+// Se implementara cuando se vea interfaz
 
 package musclemind.media;
 
@@ -12,7 +13,8 @@ public class Video {
 
     public String getUrl() { return url; }
     public String getDescripcion() { return descripcion; }
-
+    
+    // Placeholder
     public void verVideo() {
         System.out.println("Reproduciendo video: " + descripcion + " (" + url + ")");
     }

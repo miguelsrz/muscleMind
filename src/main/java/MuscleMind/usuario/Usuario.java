@@ -10,7 +10,8 @@ public class Usuario {
     private int pesoKg;
     private int password;
     private String objetivo;
-    private ArrayList<Rutina> listaRutinas;
+    private ArrayList<Rutina> listaRutinas; // Agregacion
+    // Se ve la posibilidad de cambiar la relacion si requiere a composicion, depende implementacion cuando se vea interfaz
 
     public Usuario(String nombreUsuario, int password, int edad, int pesoKg, String objetivo, Rutina rutina) {
         this.nombreUsuario = nombreUsuario;
@@ -19,9 +20,10 @@ public class Usuario {
         this.pesoKg = pesoKg;
         this.objetivo = objetivo;
         this.listaRutinas = new ArrayList<>();
-        listaRutinas.add(rutina);
+        listaRutinas.add(rutina); // Agrega la rutina creada por defecto
     }
 
+    // Getters y Setters
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -46,6 +48,11 @@ public class Usuario {
         this.objetivo = objetivo;
     }
 
+    public ArrayList<Rutina> getListaRutinas() {
+        return listaRutinas;
+    }
+
+    // Agrega y elimina rutinas
     public void agregarRutina(Rutina rutina) {
         listaRutinas.add(rutina);
     }
@@ -53,11 +60,8 @@ public class Usuario {
     public void eliminarRutina(Rutina rutina) {
         listaRutinas.remove(rutina);
     }
-
-    public ArrayList<Rutina> getListaRutinas() {
-        return listaRutinas;
-    }
-
+    
+    // No utilizados actualmente. Se espera ampliar cuando se implemente interfaz grafica
     public void empezarRutina(String nombreRutina) {
         System.out.println(nombreUsuario + " ha comenzado la rutina: " + nombreRutina);
     }

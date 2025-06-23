@@ -10,9 +10,10 @@ import java.util.ArrayList;
 public class Rutina {
 
     private String nombreRutina;
-    private ArrayList<Ejercicio> listaEjercicios;
-
-    // Sesiones realizadas
+    private ArrayList<Ejercicio> listaEjercicios; // Ejercicios de la rutina, agregacion
+    // Se ve la posibilidad de cambiar la relacion si requiere a composicion, depende implementacion cuando se vea interfaz
+    
+    // Atributos para tener registro de las sesiones realizadas
     private ArrayList<LocalDateTime> fechasSesiones;
     private ArrayList<Integer> duraciones;
     private ArrayList<Integer> calorias;
@@ -25,8 +26,10 @@ public class Rutina {
         this.duraciones = new ArrayList<>();
         this.calorias = new ArrayList<>();
         this.resultadosPorSesion = new ArrayList<>();
+        // Todo lo necesario para administrar una rutina
     }
 
+    // Getters
     public String getNombreRutina() {
         return nombreRutina;
     }
@@ -34,11 +37,13 @@ public class Rutina {
     public ArrayList<Ejercicio> getListaEjercicios() {
         return listaEjercicios;
     }
-
+    
+    // Se espera utilizar cuando se vea interfaz
     public void agregarEjercicio(Ejercicio e) {
         listaEjercicios.add(e);
     }
-
+    
+    // Permite ver los ejercicios de una rutina y su descripcion. Se espera ampliar con mas informacion cuando se vea interfaz
     public void verRutina() {
         System.out.println("Rutina: " + nombreRutina);
         System.out.println("Total ejercicios: " + listaEjercicios.size());
@@ -47,7 +52,9 @@ public class Rutina {
         }
         System.out.println();
     }
-
+    
+    
+    // Metodo para usos internos, permite ver el tipo de musculo que trabaja un ejercicio de fuerza
     private String tipoEjercicioLegible(Ejercicio e) {
         if (e instanceof EjerciciosPecho) {
             return "Pecho";
@@ -81,7 +88,7 @@ public class Rutina {
         resultadosPorSesion.add(resultadosEjercicios);
     }
 
-    // Visualización del progreso
+    // Visualización del progreso, se ven todas las sesiones de la rutina especifica
     public void verProgreso() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy, HH:mm");
         System.out.println("Progreso de la rutina: " + nombreRutina);
