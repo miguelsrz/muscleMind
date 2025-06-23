@@ -2,5 +2,9 @@
 package musclemind.ejercicio;
 
 public enum Musculo {
-    PECHO, ESPALDA, BRAZOS, CUADRICEPS
+    PECHO,
+    ESPALDA,
+    BRAZOS,
+    CUADRICEPS,
+    GENERAL
 }

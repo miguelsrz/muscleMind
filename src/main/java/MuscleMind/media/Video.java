@@ -10,6 +10,9 @@ public class Video {
         this.descripcion = descripcion;
     }
 
+    public String getUrl() { return url; }
+    public String getDescripcion() { return descripcion; }
+
     public void verVideo() {
         System.out.println("Reproduciendo video: " + descripcion + " (" + url + ")");
     }

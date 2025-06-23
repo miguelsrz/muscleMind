@@ -6,14 +6,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Sesion {
-    private String rutina;
+    private String nombreRutina;
     private LocalDateTime fecha;
     private int duracionReal;
     private int caloriasTotales;
     private List<Ejercicio> ejerciciosRealizados;
 
-    public Sesion(String rutina, LocalDateTime fecha, int duracionReal, int caloriasTotales, List<Ejercicio> ejerciciosRealizados) {
-        this.rutina = rutina;
+    public Sesion(String nombreRutina, LocalDateTime fecha, int duracionReal, int caloriasTotales, List<Ejercicio> ejerciciosRealizados) {
+        this.nombreRutina = nombreRutina;
         this.fecha = fecha;
         this.duracionReal = duracionReal;
         this.caloriasTotales = caloriasTotales;
@@ -21,8 +21,10 @@ public class Sesion {
     }
 
     public void mostrarResumen() {
-        System.out.println("Resumen de la sesión: " + rutina);
-        System.out.println("Duración: " + duracionReal + " min");
-        System.out.println("Calorías: " + caloriasTotales);
+        System.out.println("Resumen de sesión: " + nombreRutina);
+        System.out.println("Fecha: " + fecha);
+        System.out.println("Duración: " + duracionReal + " minutos");
+        System.out.println("Calorías quemadas: " + caloriasTotales);
+        System.out.println("Ejercicios realizados: " + ejerciciosRealizados.size());
     }
 }

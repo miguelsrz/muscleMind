@@ -11,7 +11,13 @@ public class EjerciciosEstiramiento extends Ejercicio {
         this.musculoEstirado = musculo;
     }
 
+    public Musculo getMusculoEstirado() { return musculoEstirado; }
+
     @Override public void mostrarVideo() { video.verVideo(); }
-    @Override public void realizar() {}
-    @Override public void mostrarTiempo() {}
+    @Override public void realizar() {
+        System.out.println("Realizando estiramiento de: " + musculoEstirado);
+    }
+    @Override public void mostrarTiempo() {
+        System.out.println("Duración del estiramiento: " + duracion + " segundos.");
+    }
 }

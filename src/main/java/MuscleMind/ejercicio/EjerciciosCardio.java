@@ -15,8 +15,15 @@ public class EjerciciosCardio extends Ejercicio implements Medible {
         this.pulsacionesPromedio = pulsaciones;
     }
 
+    public int getCaloriasQuemadas() { return caloriasQuemadas; }
+    public int getPulsacionesPromedio() { return pulsacionesPromedio; }
+
     @Override public void mostrarVideo() { video.verVideo(); }
-    @Override public void realizar() {}
-    @Override public void mostrarTiempo() {}
+    @Override public void realizar() {
+        System.out.println("Realizando ejercicio de cardio: " + nombreEjercicio);
+    }
+    @Override public void mostrarTiempo() {
+        System.out.println("Duración estimada: " + duracion + " segundos.");
+    }
     @Override public int calcularEsfuerzo() { return caloriasQuemadas; }
 }

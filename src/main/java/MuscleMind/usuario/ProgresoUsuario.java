@@ -9,10 +9,17 @@ public class ProgresoUsuario {
     private int repeticionesMaximas;
     private int distanciaRecorrida;
 
-    public ProgresoUsuario(LocalDate fecha, int peso, int repeticiones, int distancia) {
+    public ProgresoUsuario(LocalDate fecha, int pesoActual, int repeticionesMaximas, int distanciaRecorrida) {
         this.fecha = fecha;
-        this.pesoActual = peso;
-        this.repeticionesMaximas = repeticiones;
-        this.distanciaRecorrida = distancia;
+        this.pesoActual = pesoActual;
+        this.repeticionesMaximas = repeticionesMaximas;
+        this.distanciaRecorrida = distanciaRecorrida;
+    }
+
+    public void mostrarProgreso() {
+        System.out.println("Fecha: " + fecha);
+        System.out.println("Peso actual: " + pesoActual + " kg");
+        System.out.println("Repeticiones máximas: " + repeticionesMaximas);
+        System.out.println("Distancia recorrida: " + distanciaRecorrida + " metros");
     }
 }
