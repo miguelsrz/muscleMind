@@ -1,4 +1,3 @@
-
 package musclemind.ejercicio;
 
 import musclemind.media.Video;

@@ -30,7 +30,7 @@ public class Rutina {
         System.out.println("Rutina: " + nombreRutina);
         System.out.println("Total ejercicios: " + listaEjercicios.size());
         for (Ejercicio e : listaEjercicios) {
-            System.out.println(" - " + tipoEjercicioLegible(e) + ": " + e.getNombreEjercicio());
+            System.out.println(" - " + tipoEjercicioLegible(e) + ": " + e.getNombreEjercicio() + " / " + e.getDescripcionEjercicio()) ;
         }
         System.out.println("");
     }
@@ -78,7 +78,7 @@ public class Rutina {
     }
 
     private static Rutina crearHipertrofia() {
-        Rutina r = new Rutina("Fuerza - Hipertrofia");
+        Rutina r = new Rutina("(Predeterminada) Fuerza - Hipertrofia");
         Video v = new Video("http://video.com", "Video base");
 
         r.agregarEjercicio(new EjerciciosPecho("Press banca", "Ejercicio compuesto de pecho", 60, v, 12, 4, false, 60));
@@ -91,7 +91,7 @@ public class Rutina {
     }
 
     private static Rutina crearDefinicion() {
-        Rutina r = new Rutina("Pérdida de peso - Definición");
+        Rutina r = new Rutina("(Predeterminada) Pérdida de peso - Definición");
         Video v = new Video("http://video.com", "Video cardio");
 
         r.agregarEjercicio(new EjerciciosCardio("Burpees", "Cardio intenso", 60, v, 100, 140));
@@ -103,7 +103,7 @@ public class Rutina {
     }
 
     private static Rutina crearResistencia() {
-        Rutina r = new Rutina("Resistencia cardiovascular");
+        Rutina r = new Rutina("(Predeterminada) Resistencia cardiovascular");
         Video v = new Video("http://video.com", "Cardio base");
 
         r.agregarEjercicio(new EjerciciosCardio("Trote en sitio", "Cardio suave", 300, v, 200, 130));
@@ -115,7 +115,7 @@ public class Rutina {
     }
 
     private static Rutina crearRecuperacion() {
-        Rutina r = new Rutina("Recuperación y mantenimiento");
+        Rutina r = new Rutina("(Predeterminada) Recuperación y mantenimiento");
         Video v = new Video("http://video.com", "Estiramientos");
 
         r.agregarEjercicio(new EjerciciosCardio("Caminata", "Movimiento leve", 300, v, 80, 110));

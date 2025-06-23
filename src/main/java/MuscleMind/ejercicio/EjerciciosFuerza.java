@@ -5,7 +5,7 @@ import musclemind.media.Video;
 import musclemind.util.Medible;
 
 public abstract class EjerciciosFuerza extends Ejercicio implements Medible {
-    protected int cantidadRepeticiones;
+    protected int cantidadRepeticiones; // MAXIMAS en una serie
     protected int cantidadSeries;
     protected boolean esAlFallo;
     protected Musculo musculoTrabajado;
