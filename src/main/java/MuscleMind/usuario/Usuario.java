@@ -8,14 +8,14 @@ public class Usuario {
     private String nombreUsuario;
     private int edad;
     private int pesoKg;
-    private int password;
+    private int pin;
     private String objetivo;
     private ArrayList<Rutina> listaRutinas; // Agregacion
     // Se ve la posibilidad de cambiar la relacion si requiere a composicion, depende implementacion cuando se vea interfaz
 
     public Usuario(String nombreUsuario, int password, int edad, int pesoKg, String objetivo, Rutina rutina) {
         this.nombreUsuario = nombreUsuario;
-        this.password = password;
+        this.pin = password;
         this.edad = edad;
         this.pesoKg = pesoKg;
         this.objetivo = objetivo;
@@ -28,8 +28,8 @@ public class Usuario {
         return nombreUsuario;
     }
 
-    public int getPassword() {
-        return password;
+    public int getPin() {
+        return pin;
     }
 
     public int getEdad() {

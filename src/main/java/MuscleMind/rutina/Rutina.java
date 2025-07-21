@@ -12,7 +12,7 @@ public class Rutina {
     private String nombreRutina;
     private ArrayList<Ejercicio> listaEjercicios; // Ejercicios de la rutina, agregacion
     // Se ve la posibilidad de cambiar la relacion si requiere a composicion, depende implementacion cuando se vea interfaz
-    
+
     // Atributos para tener registro de las sesiones realizadas
     private ArrayList<LocalDateTime> fechasSesiones;
     private ArrayList<Integer> duraciones;
@@ -37,12 +37,12 @@ public class Rutina {
     public ArrayList<Ejercicio> getListaEjercicios() {
         return listaEjercicios;
     }
-    
+
     // Se espera utilizar cuando se vea interfaz
     public void agregarEjercicio(Ejercicio e) {
         listaEjercicios.add(e);
     }
-    
+
     // Permite ver los ejercicios de una rutina y su descripcion. Se espera ampliar con mas informacion cuando se vea interfaz
     public void verRutina() {
         System.out.println("Rutina: " + nombreRutina);
@@ -52,8 +52,7 @@ public class Rutina {
         }
         System.out.println();
     }
-    
-    
+
     // Metodo para usos internos, permite ver el tipo de musculo que trabaja un ejercicio de fuerza
     private String tipoEjercicioLegible(Ejercicio e) {
         if (e instanceof EjerciciosPecho) {
@@ -165,6 +164,11 @@ public class Rutina {
         r.agregarEjercicio(new EjerciciosCore("Bird-Dog", "Estabilización", 45, v, 10, 3, false, 30));
         r.agregarEjercicio(new EjerciciosPierna("Elevaciones talón", "Piernas suaves", 30, v, 20, 3, false, 30));
         return r;
+    }
+
+    @Override
+    public String toString() {
+        return nombreRutina;
     }
 
 }
