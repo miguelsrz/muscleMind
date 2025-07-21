@@ -68,7 +68,7 @@ public class PanelRegistro extends JFrame {
         lblObjetivo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         comboObjetivo = new JComboBox<>(new String[]{
-                "Hipertrofia", "Definición", "Resistencia", "Recuperación"
+                "Hipertrofia", "Definicion", "Resistencia", "Recuperacion"
         });
         comboObjetivo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         comboObjetivo.setFont(new Font("SansSerif", Font.PLAIN, 14));

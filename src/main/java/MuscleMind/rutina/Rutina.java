@@ -17,7 +17,7 @@ public class Rutina {
     private ArrayList<LocalDateTime> fechasSesiones;
     private ArrayList<Integer> duraciones;
     private ArrayList<Integer> calorias;
-    private ArrayList<ArrayList<String>> resultadosPorSesion;
+    private ArrayList<ArrayList<ArrayList<String>>> resultadosPorSesion;
 
     public Rutina(String nombreRutina) {
         this.nombreRutina = nombreRutina;
@@ -27,6 +27,22 @@ public class Rutina {
         this.calorias = new ArrayList<>();
         this.resultadosPorSesion = new ArrayList<>();
         // Todo lo necesario para administrar una rutina
+    }
+
+    public ArrayList<LocalDateTime> getFechasSesiones() {
+        return fechasSesiones;
+    }
+
+    public ArrayList<ArrayList<ArrayList<String>>> getResultadosPorSesion() {
+        return resultadosPorSesion;
+    }
+
+    public ArrayList<Integer> getDuraciones() {
+        return duraciones;
+    }
+
+    public ArrayList<Integer> getCalorias() {
+        return calorias;
     }
 
     // Getters
@@ -43,14 +59,52 @@ public class Rutina {
         listaEjercicios.add(e);
     }
 
-    // Permite ver los ejercicios de una rutina y su descripcion. Se espera ampliar con mas informacion cuando se vea interfaz
+    // Muestra los ejercicios de una rutina con su tipo, nombre, descripción y detalles técnicos
     public void verRutina() {
         System.out.println("Rutina: " + nombreRutina);
         System.out.println("Total ejercicios: " + listaEjercicios.size());
         for (Ejercicio e : listaEjercicios) {
-            System.out.println(" - " + tipoEjercicioLegible(e) + ": " + e.getNombreEjercicio() + " / " + e.getDescripcionEjercicio());
+            System.out.print(" - " + tipoEjercicioLegible(e) + ": " + e.getNombreEjercicio());
+            System.out.print(" / " + e.getDescripcionEjercicio());
+
+            if (e instanceof EjerciciosFuerza f) {
+                System.out.printf(" | %d reps x %d series", f.getCantidadRepeticiones(), f.getCantidadSeries());
+                System.out.printf(" | %ds descanso", f.getTiempoDescanso());
+                if (f.esAlFallo()) {
+                    System.out.print(" | al fallo");
+                }
+            } else if (e instanceof EjerciciosCardio c) {
+                System.out.printf(" | Intensidad estimada: %.1f km/h", c.getPulsacionesPromedio());
+                System.out.printf(" | Duración: %.1f min", c.getDuracion());
+            } else if (e instanceof EjerciciosEstiramiento s) {
+                System.out.printf(" | Duración: %.1f min", s.getDuracion());
+            }
+
+            System.out.println();
         }
         System.out.println();
+    }
+
+    public String obtenerResumenEjercicios() {
+        StringBuilder sb = new StringBuilder();
+        for (Ejercicio e : listaEjercicios) {
+            sb.append("• ").append(e.getNombreEjercicio()).append(": ").append(e.getDescripcionEjercicio());
+
+            if (e instanceof EjerciciosFuerza f) {
+                sb.append(String.format(" | %d reps x %d series", f.getCantidadRepeticiones(), f.getCantidadSeries()));
+                sb.append(String.format(" | %ds descanso", f.getTiempoDescanso()));
+                if (f.esAlFallo()) {
+                    sb.append(" | al fallo");
+                }
+            } else if (e instanceof EjerciciosCardio c) {
+                sb.append(String.format(" | %.1f min a %.1f km/h", c.getDuracion(), c.getPulsacionesPromedio()));
+            } else if (e instanceof EjerciciosEstiramiento s) {
+                sb.append(String.format(" | %.1f min estiramiento", s.getDuracion()));
+            }
+
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 
     // Metodo para usos internos, permite ver el tipo de musculo que trabaja un ejercicio de fuerza
@@ -80,32 +134,36 @@ public class Rutina {
     }
 
     // Registro de una sesión completa
-    public void registrarSesion(int duracion, int caloriasQuemadas, ArrayList<String> resultadosEjercicios) {
+    public void registrarSesion(int duracion, int caloriasQuemadas, ArrayList<ArrayList<String>> resultadosEjercicios) {
         fechasSesiones.add(LocalDateTime.now());
         duraciones.add(duracion);
         calorias.add(caloriasQuemadas);
         resultadosPorSesion.add(resultadosEjercicios);
     }
 
-    // Visualización del progreso, se ven todas las sesiones de la rutina especifica
-    public void verProgreso() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy, HH:mm");
+    public void verProgresoDetallado() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
         System.out.println("Progreso de la rutina: " + nombreRutina);
         for (int i = 0; i < fechasSesiones.size(); i++) {
-            String fecha = fechasSesiones.get(i).format(formatter);
-            System.out.println("\n-----------------------------------------------------------------\n ");
-            System.out.println("- Sesión #" + (i + 1) + " - " + fecha);
-            System.out.println("- Duración: " + duraciones.get(i) + " minutos");
-            System.out.println("- Calorías: " + calorias.get(i));
-            System.out.println("- Ejercicios realizados:");
-            ArrayList<String> resultados = resultadosPorSesion.get(i);
-            for (int j = 0; j < resultados.size(); j++) {
-                System.out.println("   * " + listaEjercicios.get(j).getNombreEjercicio() + ": " + resultados.get(j));
+            System.out.println("\n---------------- SESIÓN #" + (i + 1) + " ----------------");
+            System.out.println("Fecha: " + fechasSesiones.get(i).format(formatter));
+            System.out.println("Duración: " + duraciones.get(i) + " minutos");
+            System.out.println("Calorías: " + calorias.get(i) + " kcal");
+            System.out.println("Ejercicios realizados:");
+
+            ArrayList<ArrayList<String>> resultadosEjercicios = resultadosPorSesion.get(i);
+
+            for (int j = 0; j < resultadosEjercicios.size(); j++) {
+                Ejercicio e = listaEjercicios.get(j);
+                System.out.println("  ➤ " + e.getNombreEjercicio() + " - " + e.getDescripcionEjercicio());
+                for (String resultadoSerie : resultadosEjercicios.get(j)) {
+                    System.out.println("     ▪ " + resultadoSerie);
+                }
             }
-            System.out.println("\n-----------------------------------------------------------------\n ");
         }
         if (fechasSesiones.isEmpty()) {
-            System.out.println("Aún no se han registrado sesiones para esta rutina.");
+            System.out.println("Aún no se han registrado sesiones.");
         }
     }
 

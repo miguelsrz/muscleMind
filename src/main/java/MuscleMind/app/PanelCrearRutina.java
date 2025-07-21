@@ -13,6 +13,7 @@ public class PanelCrearRutina extends JFrame {
 
     private JTextField txtNombreRutina;
     private JTextField txtNombreEjercicio;
+    private JTextField txtDescripcionEjercicio;
     private JComboBox<String> comboMusculo;
     private JSpinner spDuracion, spSeries, spReps, spDescanso;
     private JCheckBox chkAlFallo;
@@ -67,7 +68,7 @@ public class PanelCrearRutina extends JFrame {
         panelFormulario.setBackground(new Color(60, 60, 60)); // gris más claro
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 16, 10, 16); // más espaciado horizontal
+        gbc.insets = new Insets(10, 16, 10, 16);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
 
@@ -87,6 +88,14 @@ public class PanelCrearRutina extends JFrame {
         txtNombreEjercicio = crearCampoTexto();
         gbc.gridx = 1;
         panelFormulario.add(txtNombreEjercicio, gbc);
+        fila++;
+
+        gbc.gridx = 0;
+        gbc.gridy = fila;
+        panelFormulario.add(etiqueta("Descripción:"), gbc);
+        txtDescripcionEjercicio = crearCampoTexto();
+        gbc.gridx = 1;
+        panelFormulario.add(txtDescripcionEjercicio, gbc);
         fila++;
 
         gbc.gridx = 0;
@@ -146,37 +155,52 @@ public class PanelCrearRutina extends JFrame {
 
         panelCentro.add(scrollFormulario);
 
-        // Botón Agregar Ejercicio (más espacio y centrado)
+        // Botón Agregar Ejercicio
         JPanel panelBotonAgregar = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panelBotonAgregar.setBackground(new Color(60, 60, 60)); // mismo gris del fondo del formulario
-
-        panelBotonAgregar.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0)); // más espacio arriba y abajo
-
+        panelBotonAgregar.setBackground(new Color(60, 60, 60));
+        panelBotonAgregar.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         JButton btnAgregar = new JButton("Agregar Ejercicio");
         estilizarBoton(btnAgregar, new Color(70, 130, 180));
         btnAgregar.setPreferredSize(new Dimension(200, 40));
         panelBotonAgregar.add(btnAgregar);
-
         panelCentro.add(panelBotonAgregar);
 
-        // Lista de ejercicios agregados
+        // Lista de ejercicios
         modeloLista = new DefaultListModel<>();
         lista = new JList<>(modeloLista);
         lista.setFont(new Font("Monospaced", Font.PLAIN, 13));
         lista.setBackground(new Color(45, 45, 45));
         lista.setForeground(Color.LIGHT_GRAY);
-        lista.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY), "Ejercicios en la Rutina", 0, 0, null, Color.WHITE));
+        lista.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(Color.GRAY),
+                "Ejercicios en la Rutina", 0, 0, null, Color.WHITE)
+        );
+
         lista.setCellRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (value instanceof Ejercicio e) {
-                    String texto = String.format("• %s [%d reps x %d series | %ds descanso]%s",
+                    String infoExtra = "";
+
+                    if (e instanceof EjerciciosFuerza fuerza) {
+                        infoExtra = String.format(" | %d reps x %d series | %ds descanso%s",
+                                fuerza.getCantidadRepeticiones(),
+                                fuerza.getCantidadSeries(),
+                                fuerza.getTiempoDescanso(),
+                                fuerza.esAlFallo() ? " al fallo" : ""
+                        );
+                    } else if (e instanceof EjerciciosCardio cardio) {
+                        infoExtra = String.format(" | Cardio %d seg", cardio.getDuracion());
+                    } else if (e instanceof EjerciciosEstiramiento est) {
+                        infoExtra = String.format(" | Estiramiento %d seg", est.getDuracion());
+                    }
+
+                    String texto = String.format("• %s: %s%s",
                             e.getNombreEjercicio(),
-                            (e instanceof EjerciciosFuerza ef) ? ef.getCantidadRepeticiones() : 0,
-                            (e instanceof EjerciciosFuerza ef) ? ef.getCantidadSeries() : 0,
-                            (e instanceof EjerciciosFuerza ef) ? ef.getTiempoDescanso() : 0,
-                            (e instanceof EjerciciosFuerza ef && ef.esAlFallo()) ? " al fallo" : "");
+                            e.getDescripcionEjercicio(),
+                            infoExtra
+                    );
                     label.setText(texto);
                 }
                 return label;
@@ -199,7 +223,7 @@ public class PanelCrearRutina extends JFrame {
         btnGuardar.setPreferredSize(new Dimension(160, 50));
 
         JButton btnEliminar = new JButton("Eliminar Ejercicio");
-        estilizarBoton(btnEliminar, Color.GRAY);
+        estilizarBoton(btnEliminar, new Color(178, 34, 34));
         btnEliminar.setPreferredSize(new Dimension(160, 50));
 
         JButton btnCerrar = new JButton("Volver al Menú");
@@ -213,7 +237,7 @@ public class PanelCrearRutina extends JFrame {
         fondo.add(panelBotones, BorderLayout.SOUTH);
         add(fondo);
 
-        // --- EVENTOS ---
+        // EVENTOS
         btnAgregar.addActionListener(e -> agregarEjercicio());
         btnEliminar.addActionListener(e -> {
             int idx = lista.getSelectedIndex();
@@ -252,10 +276,12 @@ public class PanelCrearRutina extends JFrame {
 
     private void agregarEjercicio() {
         String nombre = txtNombreEjercicio.getText().trim();
+        String descripcion = txtDescripcionEjercicio.getText().trim();
         if (nombre.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nombre ejercicio vacío", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
         int dur = (Integer) spDuracion.getValue();
         int reps = (Integer) spReps.getValue();
         int series = (Integer) spSeries.getValue();
@@ -266,21 +292,22 @@ public class PanelCrearRutina extends JFrame {
         Ejercicio ej;
         switch (musc) {
             case "Pecho" ->
-                ej = new EjerciciosPecho(nombre, "", dur, null, reps, series, alFallo, descanso);
+                ej = new EjerciciosPecho(nombre, descripcion, dur, null, reps, series, alFallo, descanso);
             case "Espalda" ->
-                ej = new EjerciciosEspalda(nombre, "", dur, null, reps, series, alFallo, descanso);
+                ej = new EjerciciosEspalda(nombre, descripcion, dur, null, reps, series, alFallo, descanso);
             case "Pierna" ->
-                ej = new EjerciciosPierna(nombre, "", dur, null, reps, series, alFallo, descanso);
+                ej = new EjerciciosPierna(nombre, descripcion, dur, null, reps, series, alFallo, descanso);
             case "Hombro", "Biceps", "Triceps" ->
-                ej = new EjerciciosBrazo(nombre, "", dur, null, reps, series, alFallo, descanso);
+                ej = new EjerciciosBrazo(nombre, descripcion, dur, null, reps, series, alFallo, descanso);
             case "Abdomen" ->
-                ej = new EjerciciosCore(nombre, "", dur, null, reps, series, alFallo, descanso);
+                ej = new EjerciciosCore(nombre, descripcion, dur, null, reps, series, alFallo, descanso);
             default ->
-                ej = new EjerciciosPecho(nombre, "", dur, null, reps, series, alFallo, descanso);
+                ej = new EjerciciosPecho(nombre, descripcion, dur, null, reps, series, alFallo, descanso);
         }
 
         modeloLista.addElement(ej);
         txtNombreEjercicio.setText("");
+        txtDescripcionEjercicio.setText("");
     }
 
     private void guardarRutina() {
@@ -300,10 +327,7 @@ public class PanelCrearRutina extends JFrame {
         }
 
         usuario.agregarRutina(nuevaRutina);
-
-        JOptionPane.showMessageDialog(this,
-                "Rutina guardada con éxito.\nTotal ejercicios: " + modeloLista.size(),
-                "Rutina Creada", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Rutina guardada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
         dispose();
         new VentanaMenuUsuario(usuario, usuarios).setVisible(true);

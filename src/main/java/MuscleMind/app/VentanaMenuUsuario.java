@@ -134,10 +134,12 @@ public class VentanaMenuUsuario extends JFrame {
                     new VentanaVerRutinas(usuario, usuarios).setVisible(true);
                     break;
                 case "Registrar Sesión":
-                    JOptionPane.showMessageDialog(panel, "Funcionalidad Registrar Sesión aún no implementada.");
+                    dispose();
+                    new PanelRegistrarSesion(usuario, usuarios).setVisible(true);
                     break;
                 case "Ver Histórico":
-                    JOptionPane.showMessageDialog(panel, "Funcionalidad Ver Histórico aún no implementada.");
+                    dispose();
+                    new PanelProgreso(usuario, usuarios).setVisible(true);
                     break;
             }
         });
