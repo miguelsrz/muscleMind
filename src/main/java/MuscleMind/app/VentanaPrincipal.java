@@ -22,7 +22,7 @@ public class VentanaPrincipal extends JFrame {
         JPanel fondo = new JPanel(new BorderLayout());
         fondo.setBackground(new Color(30, 30, 30));
 
-        // Encabezado
+        // Parte superior
         JPanel panelSuperior = new JPanel();
         panelSuperior.setBackground(new Color(30, 30, 30));
         panelSuperior.setLayout(new BoxLayout(panelSuperior, BoxLayout.Y_AXIS));
@@ -44,7 +44,7 @@ public class VentanaPrincipal extends JFrame {
 
         fondo.add(panelSuperior, BorderLayout.NORTH);
 
-        // Panel central con botones
+        // Parte central con los botones que llevan a las partes indicadas
         JPanel panelCentral = new JPanel();
         panelCentral.setBackground(new Color(45, 45, 45));
         panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
@@ -106,16 +106,5 @@ public class VentanaPrincipal extends JFrame {
         fondo.add(pie, BorderLayout.SOUTH);
 
         add(fondo);
-    }
-
-    public boolean registrarUsuario(Usuario u) {
-        boolean existe = usuarios.stream().anyMatch(x -> x.getNombreUsuario().equalsIgnoreCase(u.getNombreUsuario()));
-        if (existe) return false;
-        usuarios.add(u);
-        return true;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VentanaPrincipal(new ArrayList<>()).setVisible(true));
     }
 }

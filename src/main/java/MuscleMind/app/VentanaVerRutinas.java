@@ -30,7 +30,7 @@ public class VentanaVerRutinas extends JFrame {
         fondo.setBackground(new Color(30, 30, 30));
         fondo.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
-        // --- ENCABEZADO ---
+        // Parte superior
         JPanel encabezado = new JPanel();
         encabezado.setLayout(new BoxLayout(encabezado, BoxLayout.Y_AXIS));
         encabezado.setBackground(new Color(30, 30, 30));
@@ -50,7 +50,7 @@ public class VentanaVerRutinas extends JFrame {
         encabezado.add(descripcion);
         fondo.add(encabezado, BorderLayout.NORTH);
 
-        // --- MODELO DE RUTINAS ---
+        // Mostrar las rutinas
         modeloRutinas = new DefaultListModel<>();
         for (Rutina r : usuario.getListaRutinas()) {
             modeloRutinas.addElement(r);
@@ -88,7 +88,7 @@ public class VentanaVerRutinas extends JFrame {
         JScrollPane scrollDetalles = new JScrollPane(areaDetalles);
         scrollDetalles.setMaximumSize(new Dimension(Integer.MAX_VALUE, 350));
 
-        // --- CENTRO ---
+        // Panel del centro
         JPanel panelCentro = new JPanel();
         panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
         panelCentro.setBackground(new Color(30, 30, 30));
@@ -100,7 +100,7 @@ public class VentanaVerRutinas extends JFrame {
 
         fondo.add(panelCentro, BorderLayout.CENTER);
 
-        // --- PIE DE PÁGINA ---
+        // Parte inferior
         JPanel pie = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 15));
         pie.setBackground(new Color(30, 30, 30));
 
@@ -114,7 +114,7 @@ public class VentanaVerRutinas extends JFrame {
         pie.add(btnVolver);
         fondo.add(pie, BorderLayout.SOUTH);
 
-        // --- EVENTOS ---
+        // Eventos al seleccionar y usar botones
         listaRutinas.addListSelectionListener(e -> mostrarDetalles());
 
         btnEliminar.addActionListener(e -> {
@@ -144,6 +144,7 @@ public class VentanaVerRutinas extends JFrame {
         add(fondo);
     }
 
+    // Metodo para mostrar informacion de los ejercicios de una rutina, ya formateado
     private void mostrarDetalles() {
         Rutina seleccionada = listaRutinas.getSelectedValue();
         if (seleccionada == null) return;
@@ -171,6 +172,7 @@ public class VentanaVerRutinas extends JFrame {
         areaDetalles.setText(sb.toString());
     }
 
+    // Permite traducir y mostrar el tipo de ejercicio de manera legible
     private String tipoEjercicioLegible(Ejercicio e) {
         String clase = e.getClass().getSimpleName();
         if (clase.contains("Pecho")) return "Pecho";
@@ -182,6 +184,7 @@ public class VentanaVerRutinas extends JFrame {
         return "General";
     }
 
+    // Reduccion de codigo para estilizar
     private void configurarBoton(JButton b, Color color) {
         b.setFont(new Font("SansSerif", Font.BOLD, 14));
         b.setBackground(color);

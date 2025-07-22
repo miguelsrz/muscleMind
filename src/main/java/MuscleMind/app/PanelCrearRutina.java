@@ -37,7 +37,7 @@ public class PanelCrearRutina extends JFrame {
         fondo.setBackground(new Color(30, 30, 30));
         fondo.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
-        // --- ENCABEZADO ---
+        // Parte superior
         JPanel encabezado = new JPanel();
         encabezado.setLayout(new BoxLayout(encabezado, BoxLayout.Y_AXIS));
         encabezado.setBackground(new Color(30, 30, 30));
@@ -58,12 +58,12 @@ public class PanelCrearRutina extends JFrame {
         encabezado.add(descripcion);
         fondo.add(encabezado, BorderLayout.NORTH);
 
-        // --- CENTRO ---
+        // Parte central
         JPanel panelCentro = new JPanel();
         panelCentro.setLayout(new BoxLayout(panelCentro, BoxLayout.Y_AXIS));
         panelCentro.setBackground(new Color(30, 30, 30));
 
-        // Panel formulario con scroll
+        // Formulario para agregar ejercicio
         JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setBackground(new Color(60, 60, 60)); // gris más claro
 
@@ -73,7 +73,8 @@ public class PanelCrearRutina extends JFrame {
         gbc.weightx = 1;
 
         int fila = 0;
-
+        
+        // Estructuracion, obtenido de un tutorial en youtube
         gbc.gridx = 0;
         gbc.gridy = fila;
         panelFormulario.add(etiqueta("Nombre Rutina:"), gbc);
@@ -176,6 +177,7 @@ public class PanelCrearRutina extends JFrame {
                 "Ejercicios en la Rutina", 0, 0, null, Color.WHITE)
         );
 
+        // Muestra los ejercicios en tipo consola ya formateado
         lista.setCellRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -192,9 +194,7 @@ public class PanelCrearRutina extends JFrame {
                         );
                     } else if (e instanceof EjerciciosCardio cardio) {
                         infoExtra = String.format(" | Cardio %d seg", cardio.getDuracion());
-                    } else if (e instanceof EjerciciosEstiramiento est) {
-                        infoExtra = String.format(" | Estiramiento %d seg", est.getDuracion());
-                    }
+                    } 
 
                     String texto = String.format("• %s: %s%s",
                             e.getNombreEjercicio(),
@@ -214,7 +214,7 @@ public class PanelCrearRutina extends JFrame {
 
         fondo.add(panelCentro, BorderLayout.CENTER);
 
-        // --- BOTONES INFERIORES ---
+        // Botones de la parte inferior
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 15));
         panelBotones.setBackground(new Color(30, 30, 30));
 
@@ -237,7 +237,7 @@ public class PanelCrearRutina extends JFrame {
         fondo.add(panelBotones, BorderLayout.SOUTH);
         add(fondo);
 
-        // EVENTOS
+        // Codigo de eventos de los botones
         btnAgregar.addActionListener(e -> agregarEjercicio());
         btnEliminar.addActionListener(e -> {
             int idx = lista.getSelectedIndex();
@@ -252,6 +252,7 @@ public class PanelCrearRutina extends JFrame {
         });
     }
 
+    // Reduce codigo para estilizar
     private JLabel etiqueta(String txt) {
         JLabel l = new JLabel(txt);
         l.setForeground(Color.WHITE);
@@ -259,6 +260,7 @@ public class PanelCrearRutina extends JFrame {
         return l;
     }
 
+    // Reduce codigo para crear interfaz
     private JTextField crearCampoTexto() {
         JTextField campo = new JTextField();
         campo.setPreferredSize(new Dimension(200, 28));
@@ -267,13 +269,15 @@ public class PanelCrearRutina extends JFrame {
         return campo;
     }
 
+    // Reduce codigo para estilizar
     private void estilizarBoton(JButton boton, Color colorFondo) {
         boton.setFont(new Font("SansSerif", Font.BOLD, 14));
         boton.setBackground(colorFondo);
         boton.setForeground(Color.WHITE);
         boton.setFocusPainted(false);
     }
-
+    
+    // Agrega un ejercicio al modeloLista, se mantiene orden al crear objeto de clase especifica al ejercicio
     private void agregarEjercicio() {
         String nombre = txtNombreEjercicio.getText().trim();
         String descripcion = txtDescripcionEjercicio.getText().trim();
@@ -292,17 +296,17 @@ public class PanelCrearRutina extends JFrame {
         Ejercicio ej;
         switch (musc) {
             case "Pecho" ->
-                ej = new EjerciciosPecho(nombre, descripcion, dur, null, reps, series, alFallo, descanso);
+                ej = new EjerciciosPecho(nombre, descripcion, dur, reps, series, alFallo, descanso);
             case "Espalda" ->
-                ej = new EjerciciosEspalda(nombre, descripcion, dur, null, reps, series, alFallo, descanso);
+                ej = new EjerciciosEspalda(nombre, descripcion, dur, reps, series, alFallo, descanso);
             case "Pierna" ->
-                ej = new EjerciciosPierna(nombre, descripcion, dur, null, reps, series, alFallo, descanso);
+                ej = new EjerciciosPierna(nombre, descripcion, dur, reps, series, alFallo, descanso);
             case "Hombro", "Biceps", "Triceps" ->
-                ej = new EjerciciosBrazo(nombre, descripcion, dur, null, reps, series, alFallo, descanso);
+                ej = new EjerciciosBrazo(nombre, descripcion, dur, reps, series, alFallo, descanso);
             case "Abdomen" ->
-                ej = new EjerciciosCore(nombre, descripcion, dur, null, reps, series, alFallo, descanso);
+                ej = new EjerciciosCore(nombre, descripcion, dur, reps, series, alFallo, descanso);
             default ->
-                ej = new EjerciciosPecho(nombre, descripcion, dur, null, reps, series, alFallo, descanso);
+                ej = new EjerciciosPecho(nombre, descripcion, dur, reps, series, alFallo, descanso);
         }
 
         modeloLista.addElement(ej);
@@ -310,6 +314,7 @@ public class PanelCrearRutina extends JFrame {
         txtDescripcionEjercicio.setText("");
     }
 
+    // Validaciones previas a guardar, guardsa la rutina en el usuario especifico
     private void guardarRutina() {
         String nombreRutina = txtNombreRutina.getText().trim();
         if (nombreRutina.isEmpty()) {

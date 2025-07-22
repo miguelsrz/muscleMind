@@ -2,6 +2,7 @@ package musclemind.app;
 
 import musclemind.usuario.*;
 
+// Imports necesarios
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class VentanaMenuUsuario extends JFrame {
 
         fondo.add(panelCentral, BorderLayout.CENTER);
 
-        // Pie de página
+        // Parte inferior
         JPanel pie = new JPanel();
         pie.setBackground(new Color(30, 30, 30));
         pie.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -102,6 +103,7 @@ public class VentanaMenuUsuario extends JFrame {
         });
     }
 
+    // Reduccion de codigo para estilizar
     private void addBotonConDescripcion(JPanel panel, String textoBoton, String descripcion,
             Font fontBoton, Font fontDesc, Dimension tamano, Color colorFondo) {
 

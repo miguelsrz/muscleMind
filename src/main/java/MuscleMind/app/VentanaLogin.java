@@ -23,10 +23,10 @@ public class VentanaLogin extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
-        // Panel general
+        // Base
         JPanel fondo = new JPanel(new BorderLayout());
 
-        // --- Panel superior ---
+        // Panel superior
         JPanel panelSuperior = new JPanel();
         panelSuperior.setBackground(new Color(30, 30, 30));
         panelSuperior.setLayout(new BoxLayout(panelSuperior, BoxLayout.Y_AXIS));
@@ -47,7 +47,7 @@ public class VentanaLogin extends JFrame {
 
         fondo.add(panelSuperior, BorderLayout.NORTH);
 
-        // --- Panel central ---
+        // Panel Central
         JPanel panelCentral = new JPanel();
         panelCentral.setBackground(new Color(45, 45, 45));
         panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
@@ -55,7 +55,7 @@ public class VentanaLogin extends JFrame {
 
         Dimension tamanoEntrada = new Dimension(Integer.MAX_VALUE, 40);
 
-        // Etiqueta usuario
+        // Estilizar 
         JLabel etiquetaUsuario = new JLabel("Nombre de usuario");
         etiquetaUsuario.setForeground(Color.WHITE);
         etiquetaUsuario.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -63,7 +63,6 @@ public class VentanaLogin extends JFrame {
         panelCentral.add(etiquetaUsuario);
         panelCentral.add(Box.createVerticalStrut(6));
 
-        // Campo usuario
         campoUsuario = new JTextField();
         campoUsuario.setMaximumSize(tamanoEntrada);
         campoUsuario.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -77,7 +76,6 @@ public class VentanaLogin extends JFrame {
         ayudaUsuario.setBorder(BorderFactory.createEmptyBorder(5, 0, 15, 0));
         panelCentral.add(ayudaUsuario);
 
-        // Etiqueta PIN
         JLabel etiquetaPIN = new JLabel("PIN de acceso");
         etiquetaPIN.setForeground(Color.WHITE);
         etiquetaPIN.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -85,7 +83,6 @@ public class VentanaLogin extends JFrame {
         panelCentral.add(etiquetaPIN);
         panelCentral.add(Box.createVerticalStrut(6));
 
-        // Campo PIN
         campoPIN = new JPasswordField();
         campoPIN.setMaximumSize(tamanoEntrada);
         campoPIN.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -100,7 +97,7 @@ public class VentanaLogin extends JFrame {
         ayudaPIN.setBorder(BorderFactory.createEmptyBorder(5, 0, 10, 0));
         panelCentral.add(ayudaPIN);
 
-        // Checkbox
+        // Permite ver u ocultar el PIN
         mostrarPIN = new JCheckBox("Mostrar PIN");
         mostrarPIN.setBackground(new Color(45, 45, 45));
         mostrarPIN.setForeground(Color.LIGHT_GRAY);
@@ -113,7 +110,7 @@ public class VentanaLogin extends JFrame {
 
         panelCentral.add(Box.createVerticalStrut(25));
 
-        // Botón login (con mismo ancho)
+        // Botones
         JButton botonLogin = new JButton("Iniciar Sesión");
         botonLogin.setFont(new Font("SansSerif", Font.BOLD, 16));
         botonLogin.setBackground(new Color(70, 130, 180));
@@ -125,7 +122,6 @@ public class VentanaLogin extends JFrame {
 
         panelCentral.add(Box.createVerticalStrut(15));
 
-        // Boton volver a inicio
         JButton botonVolver = new JButton("Volver al inicio");
         botonVolver.setFont(new Font("SansSerif", Font.BOLD, 16));
         botonVolver.setBackground(Color.GRAY);
@@ -140,7 +136,7 @@ public class VentanaLogin extends JFrame {
         panelCentral.add(botonVolver);
         panelCentral.add(Box.createVerticalStrut(15));
 
-        // Mensaje de error
+        // Manejo de error basico
         mensajeError = new JLabel("", SwingConstants.CENTER);
         mensajeError.setForeground(Color.RED);
         mensajeError.setFont(new Font("SansSerif", Font.PLAIN, 12));
@@ -149,7 +145,7 @@ public class VentanaLogin extends JFrame {
 
         fondo.add(panelCentral, BorderLayout.CENTER);
 
-        // --- Pie de página ---
+        // Parte inferior
         JPanel pie = new JPanel();
         pie.setBackground(new Color(30, 30, 30));
         pie.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
@@ -164,7 +160,7 @@ public class VentanaLogin extends JFrame {
 
         add(fondo);
 
-        // Acción del botón
+        // Eventos de los botones
         botonLogin.addActionListener(e -> {
             String nombre = campoUsuario.getText().trim();
             char[] pinChars = campoPIN.getPassword();

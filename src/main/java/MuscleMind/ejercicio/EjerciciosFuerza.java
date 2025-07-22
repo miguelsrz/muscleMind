@@ -1,19 +1,17 @@
 
 package musclemind.ejercicio;
 
-import musclemind.media.Video;
-import musclemind.util.Medible;
 
-public abstract class EjerciciosFuerza extends Ejercicio implements Medible {
+public abstract class EjerciciosFuerza extends Ejercicio {
     protected int cantidadRepeticiones; // MAXIMAS en una serie
     protected int cantidadSeries;
     protected boolean esAlFallo; // Permite entender al usuario el objetivo del ejercicio
     protected Musculo musculoTrabajado;
     protected int tiempoDescanso; // en segundos
 
-    public EjerciciosFuerza(String nombre, String descripcion, int duracion, Video video,
+    public EjerciciosFuerza(String nombre, String descripcion, int duracion,
                             int repeticiones, int series, boolean alFallo, Musculo musculo, int descanso) {
-        super(nombre, descripcion, duracion, video);
+        super(nombre, descripcion, duracion);
         this.cantidadRepeticiones = repeticiones;
         this.cantidadSeries = series;
         this.esAlFallo = alFallo;
@@ -27,11 +25,5 @@ public abstract class EjerciciosFuerza extends Ejercicio implements Medible {
     public boolean esAlFallo() { return esAlFallo; }
     public Musculo getMusculoTrabajado() { return musculoTrabajado; }
     public int getTiempoDescanso() { return tiempoDescanso; }
-    
-    
-    // Se espera implementar cuando se vea interfaz
-    @Override
-    public int calcularEsfuerzo() {
-        return cantidadRepeticiones * cantidadSeries * (esAlFallo ? 2 : 1);
-    }
+   
 }

@@ -28,7 +28,7 @@ public class PanelRegistro extends JFrame {
         JPanel fondo = new JPanel(new BorderLayout());
         fondo.setBackground(new Color(30, 30, 30));
 
-        // --- Panel superior ---
+        // Panel Superior
         JPanel panelSuperior = new JPanel();
         panelSuperior.setLayout(new BoxLayout(panelSuperior, BoxLayout.Y_AXIS));
         panelSuperior.setBackground(new Color(30, 30, 30));
@@ -50,7 +50,7 @@ public class PanelRegistro extends JFrame {
 
         fondo.add(panelSuperior, BorderLayout.NORTH);
 
-        // --- Panel central con scroll ---
+        // Panel central, con el formulario para completar el registro
         JPanel central = new JPanel();
         central.setBackground(new Color(45, 45, 45));
         central.setLayout(new BoxLayout(central, BoxLayout.Y_AXIS));
@@ -61,14 +61,14 @@ public class PanelRegistro extends JFrame {
         campoEdad = crearCampoTexto("Edad", "Tu edad actual (en años).", central);
         campoPeso = crearCampoTexto("Peso (kg)", "Tu peso corporal aproximado.", central);
 
-        // --- Campo objetivo con comboBox ---
+        // Se selecciona el objetivo, elimina riesgo de error al no cumplir condicionales de objetivo en clase usuario
         JLabel lblObjetivo = new JLabel("Objetivo");
         lblObjetivo.setForeground(Color.WHITE);
         lblObjetivo.setFont(new Font("SansSerif", Font.BOLD, 14));
         lblObjetivo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         comboObjetivo = new JComboBox<>(new String[]{
-                "Hipertrofia", "Definicion", "Resistencia", "Recuperacion"
+            "Hipertrofia", "Definicion", "Resistencia", "Recuperacion"
         });
         comboObjetivo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         comboObjetivo.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -87,7 +87,7 @@ public class PanelRegistro extends JFrame {
 
         central.add(Box.createVerticalStrut(10));
 
-        // Mensaje de error
+        // Manejo de error basico
         mensajeError = new JLabel("", SwingConstants.CENTER);
         mensajeError.setForeground(Color.RED);
         mensajeError.setFont(new Font("SansSerif", Font.PLAIN, 12));
@@ -96,8 +96,8 @@ public class PanelRegistro extends JFrame {
 
         central.add(Box.createVerticalStrut(20));
 
-        // --- Botones ---
-        Dimension tamanoBoton = new Dimension(Integer.MAX_VALUE, 40);
+        // Botones
+        Dimension tamanoBoton = new Dimension(Integer.MAX_VALUE, 50);
 
         JButton btnVolver = new JButton("Volver");
         estilizarBoton(btnVolver, Color.GRAY);
@@ -114,9 +114,9 @@ public class PanelRegistro extends JFrame {
         btnRegistrar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnRegistrar.addActionListener(e -> registrar());
 
-        central.add(btnVolver);
-        central.add(Box.createVerticalStrut(15));
         central.add(btnRegistrar);
+        central.add(Box.createVerticalStrut(15));
+        central.add(btnVolver);
 
         JScrollPane scroll = new JScrollPane(central);
         scroll.setBorder(null);
@@ -138,7 +138,7 @@ public class PanelRegistro extends JFrame {
         add(fondo);
     }
 
-    // --- Métodos auxiliares ---
+    // Reduccion de codigo para la creacion de interfaz
     private JTextField crearCampoTexto(String etiqueta, String ayuda, JPanel panel) {
         JLabel lbl = new JLabel(etiqueta);
         lbl.setForeground(Color.WHITE);
@@ -146,7 +146,7 @@ public class PanelRegistro extends JFrame {
         lbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JTextField campo = new JTextField();
-        campo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        campo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         campo.setFont(new Font("SansSerif", Font.PLAIN, 14));
         campo.setHorizontalAlignment(JTextField.CENTER);
 
@@ -164,6 +164,7 @@ public class PanelRegistro extends JFrame {
         return campo;
     }
 
+    // Reduccion de codigo para la creacion de interfaz
     private JPasswordField crearCampoPassword(String etiqueta, String ayuda, JPanel panel) {
         JLabel lbl = new JLabel(etiqueta);
         lbl.setForeground(Color.WHITE);
@@ -190,6 +191,7 @@ public class PanelRegistro extends JFrame {
         return campo;
     }
 
+    // Reduccion de codigo para estilizar
     private void estilizarBoton(JButton boton, Color colorFondo) {
         boton.setFont(new Font("SansSerif", Font.BOLD, 16));
         boton.setBackground(colorFondo);
@@ -197,6 +199,7 @@ public class PanelRegistro extends JFrame {
         boton.setFocusPainted(false);
     }
 
+    // Realiza las validaciones y crea el nuevo usuario con la informacion suministrada
     private void registrar() {
         try {
             String nombre = campoNombre.getText().trim();
@@ -234,6 +237,7 @@ public class PanelRegistro extends JFrame {
         }
     }
 
+    // Manejo de error basico
     private void mostrarError(String mensaje) {
         mensajeError.setText(mensaje);
     }

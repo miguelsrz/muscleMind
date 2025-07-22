@@ -11,7 +11,6 @@ public class Usuario {
     private int pin;
     private String objetivo;
     private ArrayList<Rutina> listaRutinas; // Agregacion
-    // Se ve la posibilidad de cambiar la relacion si requiere a composicion, depende implementacion cuando se vea interfaz
 
     public Usuario(String nombreUsuario, int password, int edad, int pesoKg, String objetivo, Rutina rutina) {
         this.nombreUsuario = nombreUsuario;
